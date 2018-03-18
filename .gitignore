@@ -4,3 +4,4 @@ target
 
 #specific
 *.m3u
+filtered.*

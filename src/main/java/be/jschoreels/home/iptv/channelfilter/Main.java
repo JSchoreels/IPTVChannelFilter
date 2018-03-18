@@ -2,14 +2,11 @@ package be.jschoreels.home.iptv.channelfilter;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import com.google.common.io.Resources;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,8 +19,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        final String inputFilename = args[0];
+        final File inputFile = new File(inputFilename);
         final String playlistBody = Files.asCharSource(
-            new File(args[0]), Charsets.UTF_8
+            inputFile, Charsets.UTF_8
         ).read();
 
         final String[] splittedPlaylistBodyByDescriptor = playlistBody.split(DESCRIPTOR_TAG + ",");
@@ -71,8 +70,6 @@ public class Main {
             .collect(Collectors.toList());
 
 
-        System.out.println(filteredChannelRecords);
-
         final List<String> playlistBodyFiltered = new ArrayList<>();
         playlistBodyFiltered.add(PLAYLIST_HEADER);
         playlistBodyFiltered.addAll(
@@ -89,7 +86,11 @@ public class Main {
 
         System.out.println(String.format("Filtered %d channels over %d !", channelRecords.size() - filteredChannelRecords.size(), channelRecords.size()));
 
-        final FileWriter fileWriter = new FileWriter("output.m3u");
+
+        final File outputFile = new File("filtered." + inputFile.getName());
+        System.out.println("Written result in : " + outputFile.getPath());
+
+        final FileWriter fileWriter = new FileWriter(outputFile);
         fileWriter.write(filteredPlaylistBody);
         fileWriter.close();
     }

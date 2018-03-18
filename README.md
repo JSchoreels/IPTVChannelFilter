@@ -1,11 +1,15 @@
 Scripts that allows the manipulation of m3u playlist
 
-** To Build **
+**To Build**
+
 mvn package
 
-** To execute **
+**To execute**
+
 java -jar target/iptv-channelfilter-1.0.0-SNAPSHOT.jar [file]
-e.g :
+
+*e.g :*
+
 java -jar target/iptv-channelfilter-1.0.0-SNAPSHOT.jar src/test/resources/playlist.txt
 
 It will produce a filtered file in current directory

@@ -31,7 +31,7 @@ public class Main {
         for (int i = 1; i < splittedPlaylistBodyByDescriptor.length; i++){ // skip the first record which is PLAYLIST_HEADER
             final String currentRecordString = splittedPlaylistBodyByDescriptor[i];
             final String[] splittedRecordsByEOL = currentRecordString.split("\n");
-            final String descriptor = splittedRecordsByEOL[0];
+            final String descriptor = splittedRecordsByEOL[0].replaceAll("(\\r)", "");
             if (descriptor.startsWith("•●★") && descriptor.endsWith("★●•")){
                 category = descriptor.replace("★●•", "").replace("•●★", "");
             } else {
